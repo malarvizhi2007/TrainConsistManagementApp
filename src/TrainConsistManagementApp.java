@@ -1,25 +1,25 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * ============================================================
- * MAIN CLASS - UseCase7TrainConsistMgmt
+ * MAIN CLASS - UseCase8TrainConsistMgmt
  * ============================================================
  *
- * Use Case 7: Sort Bogies by Capacity
+ * Use Case 8: Filter Passenger Bogies Using Streams
  *
  * Description:
- * This class sorts passenger bogies based on seating
- * capacity using a custom Comparator.
+ * This class filters passenger bogies based on seating
+ * capacity using Java Stream API.
  *
  * @author Developer
- * @version 7.0
+ * @version 8.0
  */
 
 public class TrainConsistManagementApp {
 
-    // Inner Bogie class
+    // Reusing Bogie model from UC7
     static class Bogie {
         String name;
         int capacity;
@@ -34,7 +34,7 @@ public class TrainConsistManagementApp {
 
         // Header
         System.out.println("======================================");
-        System.out.println("   UC7 - Sort Bogies by Capacity (Comparator)");
+        System.out.println("   UC8 - Filter Passenger Bogies Using Streams");
         System.out.println("======================================\n");
 
         // Create list of bogies
@@ -45,21 +45,23 @@ public class TrainConsistManagementApp {
         bogies.add(new Bogie("First Class", 24));
         bogies.add(new Bogie("General", 90));
 
-        // Before sorting
-        System.out.println("Before Sorting:");
+        // Display all bogies
+        System.out.println("All Bogies:");
         for (Bogie b : bogies) {
             System.out.println(b.name + " -> " + b.capacity);
         }
 
-        // Sorting using Comparator (ascending order)
-        bogies.sort(Comparator.comparingInt(b -> b.capacity));
+        // ----- STREAM FILTER -----
+        List<Bogie> filtered = bogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
 
-        // After sorting
-        System.out.println("\nAfter Sorting by Capacity:");
-        for (Bogie b : bogies) {
+        // Display filtered bogies
+        System.out.println("\nFiltered Bogies (Capacity > 60):");
+        for (Bogie b : filtered) {
             System.out.println(b.name + " -> " + b.capacity);
         }
 
-        System.out.println("\nUC7 sorting completed...");
+        System.out.println("\nUC8 filtering completed...");
     }
 }
